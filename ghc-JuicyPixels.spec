@@ -6,7 +6,7 @@
 Summary:	Picture loading/serialization (in png, jpeg, bitmap, gif, tga, tiff and radiance)
 Name:		ghc-%{pkgname}
 Version:	3.3.5
-Release:	1
+Release:	2
 License:	BSD
 Group:		Development/Languages
 #Source0Download: http://hackage.haskell.org/package/JuicyPixels
