@@ -3,7 +3,8 @@
 %bcond_without	prof	# profiling library
 #
 %define		pkgname	JuicyPixels
-Summary:	Picture loading/serialization (in png, jpeg, bitmap, gif, tga, tiff and radiance)
+Summary:	Picture loading/serialization (in PNG, JPEG, bitmap, GIF, TGA, TIFF and radiance)
+Summary(pl.UTF-8):	Ładowanie/serializacja obrazów (w formatach PNG, JPEG, bitmap, GIF, TGA, TIFF i radiance)
 Name:		ghc-%{pkgname}
 Version:	3.3.5
 Release:	2
@@ -13,12 +14,50 @@ Group:		Development/Languages
 Source0:	http://hackage.haskell.org/package/%{pkgname}-%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	70474cc0f75c7541683a7bba14960ee0
 URL:		http://hackage.haskell.org/package/JuicyPixels
-BuildRequires:	ghc >= 6.12.3
+BuildRequires:	ghc >= 7.10.1
+BuildRequires:	ghc-base >= 4.8
+BuildRequires:	ghc-base < 6
+BuildRequires:	ghc-binary >= 0.8.1
+BuildRequires:	ghc-binary < 0.9
+BuildRequires:	ghc-bytestring >= 0.9
+BuildRequires:	ghc-bytestring < 0.11
+BuildRequires:	ghc-containers >= 0.4.2
+BuildRequires:	ghc-containers < 0.7
+BuildRequires:	ghc-deepseq >= 1.1
+BuildRequires:	ghc-deepseq < 1.5
+BuildRequires:	ghc-mtl >= 1.1
+BuildRequires:	ghc-mtl < 2.3
+BuildRequires:	ghc-primitive >= 0.4
+BuildRequires:	ghc-transformers >= 0.2
+BuildRequires:	ghc-vector >= 0.10
+BuildRequires:	ghc-vector < 0.13
+BuildRequires:	ghc-zlib >= 0.5.3.1
+BuildRequires:	ghc-zlib < 0.7
 %if %{with prof}
-BuildRequires:	ghc-prof
+BuildRequires:	ghc-prof >= 7.10.1
+BuildRequires:	ghc-base-prof >= 4.8
+BuildRequires:	ghc-binary-prof >= 0.8.1
+BuildRequires:	ghc-bytestring-prof >= 0.9
+BuildRequires:	ghc-containers-prof >= 0.4.2
+BuildRequires:	ghc-deepseq-prof >= 1.1
+BuildRequires:	ghc-mtl-prof >= 1.1
+BuildRequires:	ghc-primitive-prof >= 0.4
+BuildRequires:	ghc-transformers-prof >= 0.2
+BuildRequires:	ghc-vector-prof >= 0.10
+BuildRequires:	ghc-zlib-prof >= 0.5.3.1
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
 %requires_eq	ghc
+Requires:	ghc-base >= 4.8
+Requires:	ghc-binary >= 0.8.1
+Requires:	ghc-bytestring >= 0.9
+Requires:	ghc-containers >= 0.4.2
+Requires:	ghc-deepseq >= 1.1
+Requires:	ghc-mtl >= 1.1
+Requires:	ghc-primitive >= 0.4
+Requires:	ghc-transformers >= 0.2
+Requires:	ghc-vector >= 0.10
+Requires:	ghc-zlib >= 0.5.3.1
 Requires(post,postun):	/usr/bin/ghc-pkg
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,11 +74,27 @@ lightweight as possible, you ask it to load an image, and it'll dump
 you a big Vector full of juicy pixels. Or squared pixels, or whatever,
 as long as they're unboxed.
 
+%description -l pl.UTF-8
+Ta biblioteka udostępnia zapis i ładowanie różnych formatów obrazów w
+języku Haskell. Z założenia jest jak najlżejsza; po żądaniu
+załadowania obraazu zrzuca duży Vector pełny soczystych pikseli (juicy
+pixels). Lub kwadratowych pikseli, dopóki nie są rozpakowane.
+
 %package prof
 Summary:	Profiling %{pkgname} library for GHC
 Summary(pl.UTF-8):	Biblioteka profilująca %{pkgname} dla GHC
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	ghc-base-prof >= 4.8
+Requires:	ghc-binary-prof >= 0.8.1
+Requires:	ghc-bytestring-prof >= 0.9
+Requires:	ghc-containers-prof >= 0.4.2
+Requires:	ghc-deepseq-prof >= 1.1
+Requires:	ghc-mtl-prof >= 1.1
+Requires:	ghc-primitive-prof >= 0.4
+Requires:	ghc-transformers-prof >= 0.2
+Requires:	ghc-vector-prof >= 0.10
+Requires:	ghc-zlib-prof >= 0.5.3.1
 
 %description prof
 Profiling %{pkgname} library for GHC.  Should be installed when
@@ -88,10 +143,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README.md %{name}-%{version}-doc/*
+%doc README.md changelog %{name}-%{version}-doc/*
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
+%attr(755,root,root) %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.so
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.a
 %exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*_p.a
 
